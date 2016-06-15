@@ -1,7 +1,7 @@
 Yii2 Braintree
 ==============
 
-This extension is the port of [Laravel's Cashier Braintree package](https://github.com/laravel/cashier-braintree)
+This extension is the port of [Laravel Cashier Braintree package](https://github.com/laravel/cashier-braintree)
 
 Installation
 ------------
