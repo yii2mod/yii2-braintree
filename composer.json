@@ -1,0 +1,25 @@
+{
+    "name": "yii2mod/yii2-braintree",
+    "description": "Yii2 Braintree provides an interface to Braintree subscription billing services.",
+    "type": "yii2-extension",
+    "keywords": ["yii2", "extension"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Igor Chepurnoy",
+            "email": "igorzfort@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": ">=2.0.5",
+        "yii2mod/yii2-behaviors": "*",
+        "braintree/braintree_php": "~3.0",
+        "dompdf/dompdf": "^0.6.1",
+        "yii2mod/collection": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "yii2mod\\braintree\\": ""
+        }
+    }
+}
