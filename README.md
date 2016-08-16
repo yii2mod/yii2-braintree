@@ -49,17 +49,17 @@ $this->createTable('Subscription', [
     'braintreeId' => $this->string()->notNull(),
     'braintreePlan' => $this->string()->notNull(),
     'quantity' => $this->integer()->notNull(),
-    'trialEndAt' => Schema::TYPE_TIMESTAMP . ' NULL DEFAULT NULL',
-    'endAt' => Schema::TYPE_TIMESTAMP . ' NULL DEFAULT NULL',
-    'createdAt' => Schema::TYPE_TIMESTAMP . ' NULL DEFAULT NULL',
-    'updatedAt' => Schema::TYPE_TIMESTAMP . ' NULL DEFAULT NULL',
+    'trialEndAt' => $this->timestamp()->null(),
+    'endAt' => $this->timestamp()->null(),
+    'createdAt' => $this->timestamp()->null(),
+    'updatedAt' => $this->timestamp()->null()
 ], $tableOptions);
 
 $this->addColumn('User', 'braintreeId', $this->string());
 $this->addColumn('User', 'paypalEmail', $this->string());
 $this->addColumn('User', 'cardBrand', $this->string());
 $this->addColumn('User', 'cardLastFour', $this->string());
-$this->addColumn('User', 'trialEndAt', Schema::TYPE_TIMESTAMP . ' NULL DEFAULT NULL');
+$this->addColumn('User', 'trialEndAt', $this->timestamp()->null());
 ```
 > Also you can apply migration by the following command:
 
