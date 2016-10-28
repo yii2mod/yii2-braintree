@@ -5,12 +5,11 @@ namespace yii2mod\braintree;
 use Carbon\Carbon;
 use Exception;
 use InvalidArgumentException;
-use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Braintree\PaymentMethod;
-use Braintree\PaypalAccount;
+use Braintree\PayPalAccount;
 use Braintree\Customer as BraintreeCustomer;
 use Braintree\TransactionSearch;
 use Braintree\Transaction as BraintreeTransaction;
@@ -254,27 +253,30 @@ trait Billable
     /**
      * Update customer's credit card.
      *
-     * @param  string $token
+     * @param string $token
+     * @param array $options
      * @throws Exception
      */
-    public function updateCard($token)
+    public function updateCard($token, array $options = [])
     {
         $customer = $this->asBraintreeCustomer();
 
-        $response = PaymentMethod::create([
-            'customerId' => $customer->id,
-            'paymentMethodNonce' => $token,
-            'options' => [
-                'makeDefault' => true,
-                'verifyCard' => true,
-            ],
-        ]);
+        $response = PaymentMethod::create(
+            array_replace_recursive([
+                'customerId' => $customer->id,
+                'paymentMethodNonce' => $token,
+                'options' => [
+                    'makeDefault' => true,
+                    'verifyCard' => true,
+                ],
+            ], $options)
+        );
 
         if (!$response->success) {
             throw new Exception('Braintree was unable to create a payment method: ' . $response->message);
         }
 
-        $paypalAccount = $response->paymentMethod instanceof PaypalAccount;
+        $paypalAccount = $response->paymentMethod instanceof PayPalAccount;
 
         $this->paypalEmail = $paypalAccount ? $response->paymentMethod->email : null;
         $this->cardBrand = $paypalAccount ? null : $response->paymentMethod->cardType;
@@ -387,7 +389,7 @@ trait Billable
         $paymentMethod = $response->customer->paymentMethods[0];
         $paypalAccount = $paymentMethod instanceof PaypalAccount;
 
-        //Update user braintree info
+        // Update user braintree info
         $this->braintreeId = $response->customer->id;
         $this->paypalEmail = $paypalAccount ? $paymentMethod->email : null;
         $this->cardBrand = !$paypalAccount ? $paymentMethod->cardType : null;
