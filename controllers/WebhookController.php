@@ -103,8 +103,9 @@ class WebhookController extends Controller
     protected function cancelSubscription($subscriptionId)
     {
         $subscription = $this->getSubscriptionById($subscriptionId);
+        $shouldCancel = !$subscription->cancelled() || $subscription->onGracePeriod();
 
-        if ($subscription && !$subscription->cancelled()) {
+        if ($subscription && $shouldCancel) {
             $subscription->markAsCancelled();
         }
 
@@ -122,7 +123,7 @@ class WebhookController extends Controller
      */
     protected function getSubscriptionById($subscriptionId)
     {
-        return SubscriptionModel::find()->where(['braintreeId' => $subscriptionId])->one();
+        return SubscriptionModel::findOne(['braintreeId' => $subscriptionId]);
     }
 
     /**
