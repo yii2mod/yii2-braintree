@@ -42,7 +42,7 @@ class Cashier
     public static function useCurrency($currency, $symbol = null)
     {
         static::$currency = $currency;
-        
+
         static::useCurrencySymbol($symbol ?: static::guessCurrencySymbol($currency));
     }
 
@@ -128,8 +128,7 @@ class Cashier
         if (StringHelper::startsWith($amount, '-')) {
             return '-' . static::usesCurrencySymbol() . ltrim($amount, '-');
         }
-        
+
         return static::usesCurrencySymbol() . $amount;
     }
-
 }

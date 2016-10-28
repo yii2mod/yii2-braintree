@@ -3,7 +3,6 @@
 namespace yii2mod\braintree;
 
 use Braintree\Configuration;
-use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\Application;
 
