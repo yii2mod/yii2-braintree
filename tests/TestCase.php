@@ -2,10 +2,8 @@
 
 namespace yii2mod\braintree\tests;
 
-use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use Yii;
-use yii2mod\braintree\models\SubscriptionModel;
 
 /**
  * This is the base class for all yii framework unit tests.
@@ -16,14 +14,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $model = Yii::$container->get(SubscriptionModel::className());
-        $model->detachBehavior('timestamp');
-        $model->attachBehavior('timestamp', [
-            'class' => 'yii\behaviors\TimestampBehavior',
-            'createdAtAttribute' => 'createdAt',
-            'updatedAtAttribute' => 'updatedAt',
-            'value' => new Expression("DATETIME('now')"),
-        ]);
         $this->mockApplication();
         $this->setupTestDbData();
     }
@@ -49,9 +39,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
                 [
                     'class' => 'yii2mod\braintree\BraintreeBootstrap',
                     'environment' => 'sandbox',
-                    'merchantId' => getenv('MERCHANT_ID'),
-                    'publicKey' => getenv('PUBLIC_KEY'),
-                    'privateKey' => getenv('PRIVATE_KEY')
+                    'merchantId' => 'srh4jmvmtw2wyz6c',
+                    'publicKey' => '3x2b2yqpjb3y8z9h',
+                    'privateKey' => 'da0fe39b57f2dda9437185c6dc5325e2',
+//                    'merchantId' => getenv('MERCHANT_ID'),
+//                    'publicKey' => getenv('PUBLIC_KEY'),
+//                    'privateKey' => getenv('PRIVATE_KEY')
                 ]
             ],
             'components' => [
