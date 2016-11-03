@@ -4,7 +4,7 @@ Yii2 Braintree
 This extension is the port of [Laravel Cashier Braintree package](https://github.com/laravel/cashier-braintree)
 
 [![Latest Stable Version](https://poser.pugx.org/yii2mod/yii2-braintree/v/stable)](https://packagist.org/packages/yii2mod/yii2-braintree) [![Total Downloads](https://poser.pugx.org/yii2mod/yii2-braintree/downloads)](https://packagist.org/packages/yii2mod/yii2-braintree) [![License](https://poser.pugx.org/yii2mod/yii2-braintree/license)](https://packagist.org/packages/yii2mod/yii2-braintree)
-
+[![Build Status](https://travis-ci.org/yii2mod/yii2-braintree.svg?branch=master)](https://travis-ci.org/yii2mod/yii2-braintree)
 Installation
 ------------
 
