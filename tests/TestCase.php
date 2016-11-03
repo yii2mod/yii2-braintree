@@ -39,12 +39,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
                 [
                     'class' => 'yii2mod\braintree\BraintreeBootstrap',
                     'environment' => 'sandbox',
-                    'merchantId' => 'srh4jmvmtw2wyz6c',
-                    'publicKey' => '3x2b2yqpjb3y8z9h',
-                    'privateKey' => 'da0fe39b57f2dda9437185c6dc5325e2',
-//                    'merchantId' => getenv('MERCHANT_ID'),
-//                    'publicKey' => getenv('PUBLIC_KEY'),
-//                    'privateKey' => getenv('PRIVATE_KEY')
+                    'merchantId' => getenv('MERCHANT_ID'),
+                    'publicKey' => getenv('PUBLIC_KEY'),
+                    'privateKey' => getenv('PRIVATE_KEY')
                 ]
             ],
             'components' => [
