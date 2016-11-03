@@ -3,6 +3,7 @@
 namespace yii2mod\braintree;
 
 use Carbon\Carbon;
+use Yii;
 use yii\base\Exception;
 use yii2mod\braintree\models\SubscriptionModel;
 use Braintree\Subscription as BraintreeSubscription;
@@ -146,7 +147,8 @@ class SubscriptionBuilder
             $trialEndsAt = $this->trialDays ? Carbon::now()->addDays($this->trialDays) : null;
         }
 
-        $subscriptionModel = new SubscriptionModel([
+        $subscriptionModel = Yii::createObject([
+            'class' => SubscriptionModel::className(),
             'userId' => $this->user->id,
             'name' => $this->name,
             'braintreeId' => $response->subscription->id,
