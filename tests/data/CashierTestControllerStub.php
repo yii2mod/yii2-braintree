@@ -5,6 +5,10 @@ namespace yii2mod\braintree\tests\data;
 use Yii;
 use yii2mod\braintree\controllers\WebhookController;
 
+/**
+ * Class CashierTestControllerStub
+ * @package yii2mod\braintree\tests\data
+ */
 class CashierTestControllerStub extends WebhookController
 {
     /**

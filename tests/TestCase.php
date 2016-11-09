@@ -85,7 +85,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
         // Structure :
 
-        $db->createCommand()->createTable('Subscription', [
+        $db->createCommand()->createTable('subscription', [
             'id' => 'pk',
             'userId' => 'integer not null',
             'name' => 'string not null',
@@ -98,7 +98,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
             'updatedAt' => 'timestamp null default null',
         ])->execute();
 
-        $db->createCommand()->createTable('User', [
+        $db->createCommand()->createTable('user', [
             'id' => 'pk',
             'username' => 'string',
             'email' => 'string',
@@ -109,7 +109,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
             'trialEndAt' => 'timestamp null default null',
         ])->execute();
 
-        $db->createCommand()->insert('User', [
+        $db->createCommand()->insert('user', [
             'username' => 'John Doe',
             'email' => 'johndoe@domain.com'
         ])->execute();
