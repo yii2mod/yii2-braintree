@@ -42,8 +42,8 @@ class TestCase extends \PHPUnit_Framework_TestCase
                     'environment' => 'sandbox',
                     'merchantId' => getenv('MERCHANT_ID'),
                     'publicKey' => getenv('PUBLIC_KEY'),
-                    'privateKey' => getenv('PRIVATE_KEY')
-                ]
+                    'privateKey' => getenv('PRIVATE_KEY'),
+                ],
             ],
             'components' => [
                 'db' => [
