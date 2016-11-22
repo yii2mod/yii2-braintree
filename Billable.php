@@ -2,23 +2,24 @@
 
 namespace yii2mod\braintree;
 
+use Braintree\Customer as BraintreeCustomer;
+use Braintree\PaymentMethod;
+use Braintree\PayPalAccount;
+use Braintree\Subscription as BraintreeSubscription;
+use Braintree\Transaction as BraintreeTransaction;
+use Braintree\TransactionSearch;
 use Carbon\Carbon;
 use Exception;
 use InvalidArgumentException;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
-use Braintree\PaymentMethod;
-use Braintree\PayPalAccount;
-use Braintree\Customer as BraintreeCustomer;
-use Braintree\TransactionSearch;
-use Braintree\Transaction as BraintreeTransaction;
-use Braintree\Subscription as BraintreeSubscription;
 use yii2mod\braintree\models\SubscriptionModel;
 use yii2mod\collection\Collection;
 
 /**
  * Class Billable
+ *
  * @package yii2mod\braintree
  */
 trait Billable
@@ -28,7 +29,9 @@ trait Billable
      *
      * @param int $amount
      * @param array $options
+     *
      * @return \Braintree\Transaction
+     *
      * @throws Exception
      */
     public function charge($amount, array $options = [])
@@ -57,6 +60,7 @@ trait Billable
      * @param string $description
      * @param int $amount
      * @param array $options
+     *
      * @return \Braintree\Transaction
      */
     public function invoiceFor($description, $amount, array $options = [])
@@ -73,6 +77,7 @@ trait Billable
      *
      * @param string $subscription
      * @param string $plan
+     *
      * @return SubscriptionBuilder
      */
     public function newSubscription($subscription, $plan)
@@ -85,6 +90,7 @@ trait Billable
      *
      * @param string $subscription
      * @param string|null $plan
+     *
      * @return bool
      */
     public function onTrial($subscription = 'default', $plan = null)
@@ -118,6 +124,7 @@ trait Billable
      *
      * @param string $subscription
      * @param string|null $plan
+     *
      * @return bool
      */
     public function subscribed($subscription = 'default', $plan = null)
@@ -140,6 +147,7 @@ trait Billable
      * Get a subscription instance by name.
      *
      * @param string $subscription
+     *
      * @return SubscriptionModel|null
      */
     public function subscription($subscription = 'default')
@@ -159,6 +167,7 @@ trait Billable
      * Find an invoice by ID.
      *
      * @param string $id
+     *
      * @return Invoice|null
      */
     public function findInvoice($id)
@@ -168,9 +177,9 @@ trait Billable
             if ($invoice->customerDetails->id != $this->braintreeId) {
                 return;
             }
+
             return new Invoice($this, $invoice);
         } catch (Exception $e) {
-            //
         }
     }
 
@@ -178,7 +187,9 @@ trait Billable
      * Find an invoice or throw a 404 error.
      *
      * @param string $id
+     *
      * @return Invoice
+     *
      * @throws NotFoundHttpException
      */
     public function findInvoiceOrFail($id)
@@ -197,6 +208,7 @@ trait Billable
      *
      * @param string $id
      * @param array $data
+     *
      * @return Response
      */
     public function downloadInvoice($id, array $data)
@@ -209,6 +221,7 @@ trait Billable
      *
      * @param bool $includePending
      * @param array $parameters
+     *
      * @return Collection
      */
     public function invoices($includePending = false, $parameters = [])
@@ -236,6 +249,7 @@ trait Billable
                 }
             }
         }
+
         return Collection::make($invoices);
     }
 
@@ -243,6 +257,7 @@ trait Billable
      * Get an array of the entity's invoices.
      *
      * @param array $parameters
+     *
      * @return Collection
      */
     public function invoicesIncludingPending(array $parameters = [])
@@ -255,6 +270,7 @@ trait Billable
      *
      * @param string $token
      * @param array $options
+     *
      * @throws Exception
      */
     public function updateCard($token, array $options = [])
@@ -291,7 +307,6 @@ trait Billable
      * Update the payment method token for all of the user's subscriptions.
      *
      * @param  string $token
-     * @return void
      */
     protected function updateSubscriptionsToPaymentMethod($token)
     {
@@ -310,14 +325,13 @@ trait Billable
      * @param string $coupon
      * @param string $subscription
      * @param bool $removeOthers
-     * @return void
      */
     public function applyCoupon($coupon, $subscription = 'default', $removeOthers = false)
     {
         $subscription = $this->subscription($subscription);
 
         if (!$subscription) {
-            throw new InvalidArgumentException("Unable to apply coupon. Subscription does not exist.");
+            throw new InvalidArgumentException('Unable to apply coupon. Subscription does not exist.');
         }
 
         $subscription->applyCoupon($coupon, $removeOthers);
@@ -328,6 +342,7 @@ trait Billable
      *
      * @param  array|string $plans
      * @param  string $subscription
+     *
      * @return bool
      */
     public function subscribedToPlan($plans, $subscription = 'default')
@@ -351,6 +366,7 @@ trait Billable
      * Determine if the entity is on the given plan.
      *
      * @param  string $plan
+     *
      * @return bool
      */
     public function onPlan($plan)
@@ -363,7 +379,9 @@ trait Billable
      *
      * @param string $token
      * @param array $options
+     *
      * @return BraintreeCustomer
+     *
      * @throws Exception
      */
     public function createAsBraintreeCustomer($token, array $options = [])

@@ -2,23 +2,24 @@
 
 namespace yii2mod\braintree\controllers;
 
-use yii2mod\braintree\models\SubscriptionModel;
+use Braintree\WebhookNotification;
 use Exception;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\helpers\Inflector;
 use yii\web\Controller;
-use Braintree\WebhookNotification;
 use yii\web\Response;
+use yii2mod\braintree\models\SubscriptionModel;
 
 /**
  * Class WebhookController
+ *
  * @package yii2mod\braintree\controllers
  */
 class WebhookController extends Controller
 {
     /**
-     * @var bool whether to enable CSRF validation for the actions in this controller.
+     * @var bool whether to enable CSRF validation for the actions in this controller
      */
     public $enableCsrfValidation = false;
 
@@ -26,6 +27,7 @@ class WebhookController extends Controller
      * Returns a list of behaviors that this component should behave as.
      *
      * Child classes may override this method to specify the behaviors they want to behave as.
+     *
      * @return array
      */
     public function behaviors()
@@ -35,8 +37,8 @@ class WebhookController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'handle-webhook' => ['post'],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -76,6 +78,7 @@ class WebhookController extends Controller
      * Handle a subscription cancellation notification from Braintree.
      *
      * @param WebhookNotification $webhook
+     *
      * @return Response
      */
     protected function handleSubscriptionCanceled($webhook)
@@ -87,6 +90,7 @@ class WebhookController extends Controller
      * Handle a subscription expiration notification from Braintree.
      *
      * @param WebhookNotification $webhook
+     *
      * @return Response
      */
     protected function handleSubscriptionExpired($webhook)
@@ -98,6 +102,7 @@ class WebhookController extends Controller
      * Handle a subscription cancellation notification from Braintree.
      *
      * @param string $subscriptionId
+     *
      * @return Response
      */
     protected function cancelSubscription($subscriptionId)
@@ -110,7 +115,7 @@ class WebhookController extends Controller
 
         return new Response([
             'statusCode' => 200,
-            'statusText' => 'Webhook Handled'
+            'statusText' => 'Webhook Handled',
         ]);
     }
 
@@ -118,6 +123,7 @@ class WebhookController extends Controller
      * Get the user for the given subscription ID.
      *
      * @param string $subscriptionId
+     *
      * @return null|SubscriptionModel
      */
     protected function getSubscriptionById($subscriptionId)
@@ -133,7 +139,7 @@ class WebhookController extends Controller
     public function missingMethod()
     {
         return new Response([
-            'statusCode' => 200
+            'statusCode' => 200,
         ]);
     }
 }

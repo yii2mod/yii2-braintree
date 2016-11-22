@@ -3,11 +3,12 @@
 namespace yii2mod\braintree;
 
 use Braintree\Configuration;
-use yii\base\BootstrapInterface;
 use yii\base\Application;
+use yii\base\BootstrapInterface;
 
 /**
  * Class BraintreeBootstrap
+ *
  * @package yii2mod\braintree
  */
 class BraintreeBootstrap implements BootstrapInterface

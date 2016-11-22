@@ -2,14 +2,15 @@
 
 namespace yii2mod\braintree;
 
+use Braintree\Subscription as BraintreeSubscription;
 use Carbon\Carbon;
 use Yii;
 use yii\base\Exception;
 use yii2mod\braintree\models\SubscriptionModel;
-use Braintree\Subscription as BraintreeSubscription;
 
 /**
  * Class SubscriptionBuilder
+ *
  * @package yii2mod\braintree
  */
 class SubscriptionBuilder
@@ -74,11 +75,13 @@ class SubscriptionBuilder
      * Specify the ending date of the trial.
      *
      * @param int $trialDays
+     *
      * @return $this
      */
     public function trialDays($trialDays)
     {
         $this->trialDays = $trialDays;
+
         return $this;
     }
 
@@ -90,6 +93,7 @@ class SubscriptionBuilder
     public function skipTrial()
     {
         $this->skipTrial = true;
+
         return $this;
     }
 
@@ -97,11 +101,13 @@ class SubscriptionBuilder
      * The coupon to apply to a new subscription.
      *
      * @param string $coupon
+     *
      * @return $this
      */
     public function withCoupon($coupon)
     {
         $this->coupon = $coupon;
+
         return $this;
     }
 
@@ -109,6 +115,7 @@ class SubscriptionBuilder
      * Add a new Braintree subscription to the user.
      *
      * @param array $options
+     *
      * @return SubscriptionModel
      */
     public function add(array $options = [])
@@ -122,7 +129,9 @@ class SubscriptionBuilder
      * @param string|null $token
      * @param array $customerOptions
      * @param array $subscriptionOptions
+     *
      * @return SubscriptionModel
+     *
      * @throws Exception
      */
     public function create($token = null, array $customerOptions = [], array $subscriptionOptions = [])
@@ -154,7 +163,7 @@ class SubscriptionBuilder
             'braintreeId' => $response->subscription->id,
             'braintreePlan' => $this->plan,
             'trialEndAt' => $trialEndsAt,
-            'endAt' => null
+            'endAt' => null,
         ]);
 
         if ($subscriptionModel->save()) {
@@ -169,6 +178,7 @@ class SubscriptionBuilder
      *
      * @param  \Braintree\Customer $customer
      * @param  array $options
+     *
      * @return array
      */
     protected function getSubscriptionPayload($customer, array $options = [])
@@ -195,6 +205,7 @@ class SubscriptionBuilder
      * Add the coupon discount to the Braintree payload.
      *
      * @param array $payload
+     *
      * @return array
      */
     protected function addCouponToPayload(array $payload)
@@ -215,6 +226,7 @@ class SubscriptionBuilder
      *
      * @param string|null $token
      * @param array $options
+     *
      * @return \Braintree\Customer
      */
     protected function getBraintreeCustomer($token = null, array $options = [])

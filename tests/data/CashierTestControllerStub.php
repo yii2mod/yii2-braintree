@@ -7,6 +7,7 @@ use yii2mod\braintree\controllers\WebhookController;
 
 /**
  * Class CashierTestControllerStub
+ *
  * @package yii2mod\braintree\tests\data
  */
 class CashierTestControllerStub extends WebhookController
@@ -16,9 +17,9 @@ class CashierTestControllerStub extends WebhookController
      */
     protected function parseBraintreeNotification()
     {
-        $requestParams = new \stdClass;
+        $requestParams = new \stdClass();
         $requestParams->kind = Yii::$app->request->getBodyParam('kind');
-        $requestParams->subscription = new \stdClass;
+        $requestParams->subscription = new \stdClass();
         $requestParams->subscription->id = Yii::$app->request->getBodyParam('subscription')['id'];
 
         return $requestParams;

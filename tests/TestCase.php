@@ -2,8 +2,8 @@
 
 namespace yii2mod\braintree\tests;
 
-use yii\helpers\ArrayHelper;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the base class for all yii framework unit tests.
@@ -26,6 +26,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Populates Yii::$app with a new application
      * The application will be destroyed on tearDown() automatically.
+     *
      * @param array $config The application configuration, if needed
      * @param string $appClass name of the application class to create
      */
@@ -39,9 +40,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
                 [
                     'class' => 'yii2mod\braintree\BraintreeBootstrap',
                     'environment' => 'sandbox',
-                    'merchantId' => getenv('MERCHANT_ID'),
-                    'publicKey' => getenv('PUBLIC_KEY'),
-                    'privateKey' => getenv('PRIVATE_KEY')
+                    'merchantId' => 'srh4jmvmtw2wyz6c',
+                    'publicKey' => '3x2b2yqpjb3y8z9h',
+                    'privateKey' => 'da0fe39b57f2dda9437185c6dc5325e2',
+//                    'merchantId' => getenv('MERCHANT_ID'),
+//                    'publicKey' => getenv('PUBLIC_KEY'),
+//                    'privateKey' => getenv('PRIVATE_KEY')
                 ]
             ],
             'components' => [
@@ -51,7 +55,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
                 ],
                 'request' => [
                     'hostInfo' => 'http://domain.com',
-                    'scriptUrl' => 'index.php'
+                    'scriptUrl' => 'index.php',
                 ],
                 'user' => [
                     'identityClass' => 'yii2mod\braintree\tests\data\User',
@@ -111,7 +115,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
         $db->createCommand()->insert('user', [
             'username' => 'John Doe',
-            'email' => 'johndoe@domain.com'
+            'email' => 'johndoe@domain.com',
         ])->execute();
     }
 }

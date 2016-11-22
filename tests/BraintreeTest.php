@@ -156,6 +156,7 @@ class BraintreeTest extends TestCase
             if ($discount->id === 'plan-credit') {
                 $this->assertEquals('10.00', $discount->amount);
                 $this->assertEquals(9, $discount->numberOfBillingCycles);
+
                 return;
             }
         }
@@ -190,6 +191,7 @@ class BraintreeTest extends TestCase
             if ($discount->id === 'plan-credit') {
                 $this->assertEquals('90.00', $discount->amount);
                 $this->assertEquals(1, $discount->numberOfBillingCycles);
+
                 return;
             }
         }
@@ -208,7 +210,7 @@ class BraintreeTest extends TestCase
             'kind' => 'SubscriptionCanceled',
             'subscription' => [
                 'id' => $subscription->braintreeId,
-            ]
+            ],
         ];
 
         $controller = new CashierTestControllerStub('webhook', Yii::$app);
@@ -237,7 +239,7 @@ class BraintreeTest extends TestCase
             'kind' => 'SubscriptionCanceled',
             'subscription' => [
                 'id' => $subscription->braintreeId,
-            ]
+            ],
         ];
 
         $controller = new CashierTestControllerStub('webhook', Yii::$app);

@@ -1,6 +1,5 @@
 <?php
 
-use yii2mod\cashier\Cashier;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 

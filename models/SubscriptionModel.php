@@ -2,6 +2,8 @@
 
 namespace yii2mod\braintree\models;
 
+use Braintree\Plan as BraintreePlan;
+use Braintree\Subscription as BraintreeSubscription;
 use Carbon\Carbon;
 use LogicException;
 use Yii;
@@ -9,30 +11,26 @@ use yii\base\Exception;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii2mod\behaviors\CarbonBehavior;
-use Braintree\Subscription as BraintreeSubscription;
-use Braintree\Plan as BraintreePlan;
 use yii2mod\braintree\BraintreeService;
 use yii2mod\collection\Collection;
 
 /**
  * This is the model class for table "Subscription".
  *
- * @property integer $id
- * @property integer $userId
+ * @property int $id
+ * @property int $userId
  * @property string $name
  * @property string $braintreeId
  * @property string $braintreePlan
- * @property integer $quantity
+ * @property int $quantity
  * @property Carbon $trialEndAt
  * @property Carbon $endAt
- * @property integer $createdAt
- * @property integer $updatedAt
- *
+ * @property int $createdAt
+ * @property int $updatedAt
  * @property \yii\db\ActiveRecord $user
  */
 class SubscriptionModel extends ActiveRecord
 {
-
     /**
      * @inheritdoc
      */
@@ -88,13 +86,13 @@ class SubscriptionModel extends ActiveRecord
                     $currentDateExpression = Yii::$app->db->getDriverName() === 'sqlite' ? "DATETIME('now')" : 'NOW()';
 
                     return new Expression($currentDateExpression);
-                }
+                },
             ],
             'carbon' => [
                 'class' => CarbonBehavior::className(),
                 'attributes' => [
                     'trialEndAt',
-                    'endAt'
+                    'endAt',
                 ],
             ],
         ];
@@ -102,6 +100,7 @@ class SubscriptionModel extends ActiveRecord
 
     /**
      * User relation
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getUser()
@@ -153,7 +152,6 @@ class SubscriptionModel extends ActiveRecord
         }
     }
 
-
     /**
      * Determine if the subscription is within its grace period after cancellation.
      *
@@ -172,7 +170,9 @@ class SubscriptionModel extends ActiveRecord
      * Swap the subscription to a new Braintree plan.
      *
      * @param string $plan
+     *
      * @return $this
+     *
      * @throws Exception
      */
     public function swap($plan)
@@ -220,6 +220,7 @@ class SubscriptionModel extends ActiveRecord
      * Determine if the given plan would alter the billing frequency.
      *
      * @param  string $plan
+     *
      * @return bool
      */
     protected function wouldChangeBillingFrequency($plan)
@@ -232,6 +233,7 @@ class SubscriptionModel extends ActiveRecord
      * Swap the subscription to a new Braintree plan with a different frequency.
      *
      * @param string $plan
+     *
      * @return $this
      */
     protected function swapAcrossFrequencies($plan)
@@ -265,6 +267,7 @@ class SubscriptionModel extends ActiveRecord
      *
      * @param  BraintreePlan $currentPlan
      * @param  BraintreePlan $plan
+     *
      * @return bool
      */
     protected function switchingToMonthlyPlan($currentPlan, $plan)
@@ -277,6 +280,7 @@ class SubscriptionModel extends ActiveRecord
      *
      * @param  BraintreePlan $currentPlan
      * @param  BraintreePlan $plan
+     *
      * @return object
      */
     protected function getDiscountForSwitchToMonthly($currentPlan, $plan)
@@ -293,6 +297,7 @@ class SubscriptionModel extends ActiveRecord
      * Calculate the amount of discount to apply to a swap to monthly billing.
      *
      * @param BraintreePlan $plan
+     *
      * @return float
      */
     protected function moneyRemainingOnYearlyPlan($plan)
@@ -315,6 +320,7 @@ class SubscriptionModel extends ActiveRecord
                 $amount += (float)$discount->amount * $discount->numberOfBillingCycles;
             }
         }
+
         return (object)[
             'amount' => $amount,
             'numberOfBillingCycles' => 1,
@@ -326,12 +332,11 @@ class SubscriptionModel extends ActiveRecord
      *
      * @param string $coupon
      * @param bool $removeOthers
-     * @return void
      */
     public function applyCoupon($coupon, $removeOthers = false)
     {
         if (!$this->active()) {
-            throw new \InvalidArgumentException("Unable to apply coupon. Subscription not active.");
+            throw new \InvalidArgumentException('Unable to apply coupon. Subscription not active.');
         }
         BraintreeSubscription::update($this->braintreeId, [
             'discounts' => [
@@ -396,8 +401,6 @@ class SubscriptionModel extends ActiveRecord
 
     /**
      * Mark the subscription as cancelled.
-     *
-     * @return void
      */
     public function markAsCancelled()
     {
